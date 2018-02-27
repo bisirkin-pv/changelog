@@ -7,16 +7,16 @@
 </head>
 <body>
 <div class="login-block">
-<h1>Добро пожаловать!</h1>
-<form method="post">
-    <label for="login">Пользователь:
-        <input type="text" name="login">
-    </label>
-    <label for="password">Пароль:
-        <input type="text" name="password">
-    </label>
-    <input type="button" value="Вход" id="js-enter">
-</form>
+    <h1>Добро пожаловать!</h1>
+    <form method="post" id="js-form-auth" name="formAuth">
+        <label for="login">Пользователь:
+            <input type="text" name="login">
+        </label>
+        <label for="password">Пароль:
+            <input type="password" name="password">
+        </label>
+        <input type="button" value="Вход" id="js-btn-enter">
+    </form>
 </div>
 </body>
 </html>
