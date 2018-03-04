@@ -2,7 +2,9 @@ package account;
 
 public class Authorize implements AutorizeService {
     @Override
-    public boolean autorize(String username, String password) {
-        return "admin".equals(username) && "admin".equals(password);
+    public int autorize(String username, String password) {
+        UserValidateService userValidateService = new UserValidate();
+        int userId = userValidateService.check(username, password);
+        return userId;
     }
 }

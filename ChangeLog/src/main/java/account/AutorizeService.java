@@ -1,5 +1,5 @@
 package account;
 
 public interface AutorizeService {
-    boolean autorize(String username, String password);
+    int autorize(String username, String password);
 }

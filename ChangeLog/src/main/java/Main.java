@@ -1,4 +1,7 @@
 import account.Authorize;
+import account.UserBase;
+import account.UserOnline;
+import controller.UserController;
 import spark.ModelAndView;
 import view.Template;
 
@@ -24,19 +27,10 @@ public class Main {
                 new ModelAndView(null, "base.ftl"))
         );
 
-        enableCORS("*","GET,POST","Access-Control-Allow-Origin");
-        
-        post("/api/login",(request, response)-> {
-            System.out.println(request.queryParams());
-            Authorize authorize = new Authorize();
-            boolean isAuth = authorize.autorize(request.queryParams("username") == null ? "" : request.queryParams("username")
-                    ,request.queryParams("password") == null ? "" : request.queryParams("password"));
-            //TODO: Доделать авторизацию
-            String authCode = isAuth ? "200" : "403";
-            LOG.log(Level.INFO, authCode);
-            request.session().attribute("authCode", authCode);
-            return authCode;
-        });
+        enableCORS("*", "GET,POST", "Access-Control-Allow-Origin");
+
+        post("/api/login", (request, response) -> UserController.login(request));
+
     }
 
     private static void enableCORS(final String origin, final String methods, final String headers) {
@@ -72,8 +66,10 @@ public class Main {
                 String path = request.splat()[0];
                 isApi = path.contains("api/");
             }
-            boolean authenticated;
-            authenticated = "200".equals(request.session().attribute("authCode"));
+            boolean authenticated = false;
+            if(UserOnline.getUser(request.session().id())!= null) {
+                authenticated = true;
+            }
             if (!isApi && !authenticated && request.splat().length>0) {
                 halt(401, "You are not welcome here");
             }
