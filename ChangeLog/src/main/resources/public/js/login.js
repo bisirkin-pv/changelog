@@ -1,9 +1,9 @@
 window.onload = function () {
-    document.querySelector("#js-btn-enter").addEventListener("click", function(elem){
-        var formElement = document.querySelector("#js-form-auth");
+    document.querySelector("#logIn_btn").addEventListener("click", function(elem){
+        var formElement = document.querySelector(".login-form");
         if(formElement){
-            var formData = 'username=' + encodeURIComponent(formElement.querySelector("input[name=login]").value) +
-                      '&password=' + encodeURIComponent(formElement.querySelector("input[name=password]").value);
+            var formData = 'username=' + encodeURIComponent(formElement.querySelector("input[name=inputLogin]").value) +
+                      '&password=' + encodeURIComponent(formElement.querySelector("input[name=inputPassword]").value);
             sendAuthForm(formData);
         }
     },true);

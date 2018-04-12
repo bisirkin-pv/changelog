@@ -24,7 +24,7 @@ public class Main {
         Gson gson = new Gson();
 
         get("/", (req, res) -> Template.getTemplate().render(
-                new ModelAndView(null, "base.ftl"))
+                new ModelAndView(null, "login.ftl"))
         );
 
         enableCORS("*", "GET,POST", "Access-Control-Allow-Origin");
@@ -70,8 +70,10 @@ public class Main {
             if(UserOnline.getUser(request.session().id())!= null) {
                 authenticated = true;
             }
-            if (!isApi && !authenticated && request.splat().length>0) {
-                halt(401, "You are not welcome here");
+            if (!isApi && !authenticated) {
+                if(request.splat().length>0 && !"images".equals(request.splat()[0].split("/")[0])) {
+                    halt(401, "You are not welcome here");
+                }
             }
         });
     }
