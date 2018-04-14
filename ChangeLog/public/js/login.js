@@ -7,6 +7,12 @@ window.onload = function () {
             sendAuthForm(formData);
         }
     },true);
+
+    $('#inputPassword').keypress(function(event) {
+    	if(event.keyCode===13){
+                $('#logIn_btn').click();
+            }
+        });
 };
 
 /*
@@ -22,7 +28,7 @@ function _sendForm(path, formData, callback) {
 
     xhr.onreadystatechange = function() {
       if (this.readyState != 4) return;
-        console.log(this.responseText);
+        callback(this.responseText);
     }
 
     xhr.open("POST", path, true);
@@ -33,6 +39,11 @@ function _sendForm(path, formData, callback) {
 
 function sendAuthForm(formData){
     _sendForm("http://localhost:8080/api/login", formData, function(response){
-        console.log(response);
+        var obj = JSON.parse(response);
+        if(obj.code == 200){
+            window.location.replace("/changelog/add");
+        }else{
+            $("#error-text").html(obj.msg);
+        }
     })
 }

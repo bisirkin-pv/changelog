@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/style.css">
     <script src="/js/jquery-1.12.3.min.js"></script>
+    <script src="/js/login.js"></script>
 </head>
 <body>
 <div class="login-block">
@@ -29,7 +30,7 @@
                 </div>
 		<div class="form-group">
 			<div class="col-sm-offset-3 col-sm-9">
-				<div class="checkbox">
+				<div class="checkbox" style="display:none">
 					<label>
 						<input type="checkbox"> Remember me
 					</label>
@@ -43,8 +44,5 @@
 		</div>
 	</form>
 </div>
-
-<script src="/js/login.js"></script>
-<script src="/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -1,14 +1,16 @@
 import account.Authorize;
+import account.User;
 import account.UserBase;
 import account.UserOnline;
 import controller.UserController;
 import spark.ModelAndView;
+import spark.Request;
 import view.Template;
 
 import static spark.Spark.*;
 import com.google.gson.Gson;
-
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,7 +18,10 @@ public class Main {
     private static final Logger LOG = Logger.getLogger(Main.class.getName());
     public static void main(String[] args) {
         exception(Exception.class, (e, req, res) -> e.printStackTrace());
-        staticFiles.location("public");
+        //staticFiles.location("public");
+        String workingDir = System.getProperty("user.dir") + "/ChangeLog/public";
+        externalStaticFileLocation(workingDir);
+
         //4567
         port(8080);
         Template.setTemplate();
@@ -24,8 +29,16 @@ public class Main {
         Gson gson = new Gson();
 
         get("/", (req, res) -> Template.getTemplate().render(
-                new ModelAndView(null, "login.ftl"))
+            new ModelAndView(null, "login.ftl"))
         );
+
+        get("/changelog/add", (req, res) -> {
+            Map<String, Object> model = templatePrepare(req);
+            model.put("current_page", "addlog");
+            return Template.getTemplate().render(
+                    new ModelAndView(model, "addlog.ftl")
+            );
+        });
 
         enableCORS("*", "GET,POST", "Access-Control-Allow-Origin");
 
@@ -72,9 +85,20 @@ public class Main {
             }
             if (!isApi && !authenticated) {
                 if(request.splat().length>0 && !"images".equals(request.splat()[0].split("/")[0])) {
-                    halt(401, "You are not welcome here");
+                    //halt(401, "You are not welcome here");
+                    response.redirect("/");
                 }
             }
         });
+    }
+
+    private static Map<String, Object> templatePrepare(Request request){
+        Map<String, Object> model = new HashMap<>();
+        User user = UserOnline.getUser(request.session().id());
+        System.out.println(request.session().attribute("authUser").toString());
+        model.put("user_name", user != null ? user.getName() : "");
+        model.put("user_login", user != null ?  user.getLogin() : "");
+        model.put("users_online", "");
+        return model;
     }
 }

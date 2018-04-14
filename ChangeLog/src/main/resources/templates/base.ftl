@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/style.css">
     <script src="/js/jquery-1.12.3.min.js"></script>
-    <script src="/js/login.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-default navbar-fixed-top">
