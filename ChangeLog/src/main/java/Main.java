@@ -2,19 +2,25 @@ import account.Authorize;
 import account.User;
 import account.UserBase;
 import account.UserOnline;
+import changelog.QuerysLoader;
+import connect.Config;
 import controller.UserController;
+import setting.Setting;
 import spark.ModelAndView;
 import spark.Request;
 import view.Template;
 
 import static spark.Spark.*;
 import com.google.gson.Gson;
+
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Main {
+    private static int goodLoad;
     private static final Logger LOG = Logger.getLogger(Main.class.getName());
     public static void main(String[] args) {
         exception(Exception.class, (e, req, res) -> e.printStackTrace());
@@ -25,6 +31,12 @@ public class Main {
         //4567
         port(8080);
         Template.setTemplate();
+
+        try {
+            setting(); //ssl settings
+        } catch (IOException ex) {
+            LOG.log(Level.INFO, ex.getMessage());
+        }
 
         Gson gson = new Gson();
 
@@ -100,5 +112,12 @@ public class Main {
         model.put("user_login", user != null ?  user.getLogin() : "");
         model.put("users_online", "");
         return model;
+    }
+
+    private static void setting() throws IOException {
+        Setting setting = new Setting();
+        Config.load(Config.Type.PROD, setting.getProperties("config.db.prod.path"));
+        Config.load(Config.Type.TEST, setting.getProperties("config.db.test.path"));
+        goodLoad = QuerysLoader.load();
     }
 }
