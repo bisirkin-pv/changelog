@@ -455,7 +455,7 @@ ORDER BY version DESC, dt DESC;')
 
 INSERT INTO dbo.tChangeLogQuery(name, text)
 VALUES('insertHeader','
-INSERT INTO TEST.dbo.tChangeLog (version, dt, issue, issueUrl, description, comment, developer, svnCopyTo, svnCommit, isDev)
+INSERT INTO dbo.tChangeLog (version, dt, issue, issueUrl, description, comment, developer, svnCopyTo, svnCommit, isDev)
 VALUES (:version, :dt, :issue, :issueUrl, :description, :comment, :developer, :svnCopyTo, :svnCommit, :isDev);')
 
 INSERT INTO dbo.tChangeLogQuery(name, text)
@@ -562,3 +562,12 @@ INSERT INTO dbo.tChangeLogQuery(name, text)
 VALUES('insertDetailDesc','
 INSERT INTO dbo.tChangeLogObject (clId,description) 
 VALUES(:clid, :content)')
+
+INSERT INTO dbo.tChangeLogQuery(name, text)
+VALUES('getIssueInfo','
+SELECT
+    :issue issueId
+    ,'''' issueName
+    ,'''' [login]
+    ,'''' endDevelopmentDt
+    ,''Статус'' [status]')
