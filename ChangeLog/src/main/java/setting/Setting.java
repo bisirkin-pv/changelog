@@ -13,8 +13,8 @@ public class Setting {
 
     public Setting() throws IOException {
         properties = new Properties();
-        String file = System.getProperty("user.dir") + "/ChangeLog/config/settings.properties";
-        properties.load(new BufferedReader(new FileReader(file)));
+        //String file = System.getProperty("user.dir") + "/ChangeLog/config/settings.properties";
+        properties.load(new BufferedReader(new FileReader("config/settings.properties")));
     }
 
     public String getProperties(String name){
