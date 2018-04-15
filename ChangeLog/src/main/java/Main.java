@@ -2,6 +2,7 @@ import account.Authorize;
 import account.User;
 import account.UserBase;
 import account.UserOnline;
+import changelog.ChangeLog;
 import changelog.QuerysLoader;
 import connect.Config;
 import controller.UserController;
@@ -56,6 +57,35 @@ public class Main {
 
         post("/api/login", (request, response) -> UserController.login(request));
 
+        post("/api/header", (request, response)->{
+            ChangeLog changeLog = new ChangeLog();
+            return changeLog.saveHeader(request);
+        });
+
+        post("/api/detail",(req, res)->{
+            ChangeLog changeLog = new ChangeLog();
+            return changeLog.saveDetail(req);
+        });
+
+        post("/api/version",(req, res)->{
+            ChangeLog changeLog = new ChangeLog();
+            return changeLog.getCurrentVersion();
+        });
+
+        post("/api/issue",(req, res)->{
+            ChangeLog changeLog = new ChangeLog();
+            if("".equals(req.queryParams("in_issue"))){
+                return new Gson().toJson("");
+            }
+            int issue;
+            try{
+                issue = Integer.parseInt(req.queryParams("in_issue"));
+            }catch(NumberFormatException ex){
+                LOG.log(Level.SEVERE, ex.getMessage());
+                return new Gson().toJson("");
+            }
+            return new Gson().toJson(changeLog.getIssueInfo(issue));
+        });
     }
 
     private static void enableCORS(final String origin, final String methods, final String headers) {
