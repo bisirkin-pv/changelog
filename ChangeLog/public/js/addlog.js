@@ -30,7 +30,7 @@ $("#btb_add_obj").click(function(){
 
 function sendChangeLog(){	
 	$.ajax({
-	  url: '/sendpost',
+	  url: '/api/header',
           type: "POST",
 	  data: $('#form_log_header').serialize(),
 	  success: function(logid){
@@ -40,14 +40,14 @@ function sendChangeLog(){
 		
 	  },
           error: function(e){
-              console.log("Error");
+              console.log("Error, sendChangeLog");
           }
 	});
 };
 
  function sendDetailLog(){	
 	$.ajax({
-	  url: '/sendDetailLog',
+	  url: '/api/detail',
           type: "POST",
 	  data: $('#form_log_detail').serialize(),
 	  success: function(logid){
@@ -58,7 +58,7 @@ function sendChangeLog(){
                 $name.val("");
 	  },
           error: function(e){
-              console.log("Error");
+              console.log("Error, sendDetailLog");
           }
 	});
 };
@@ -90,7 +90,7 @@ $(document).ready(function(){
 
 function getCurrentVersion(){
     $.ajax({
-	  url: '/getcurrentversion',
+	  url: '/api/version',
           type: "POST",
 	  success: function(ver){
                 
@@ -98,39 +98,40 @@ function getCurrentVersion(){
                 $version.val(ver);
 	  },
           error: function(e){
-              console.log("Error");
+              console.log("Error, getCurrentVersion");
           }
 	});
 }
 /* Получаем сведения из редмаина */
 function getIssueInfo(id){
     $.ajax({
-	  url: '/getissueinfo',
-          type: "POST",
-          dataType: 'json',
-          data: 'in_issue=' + id,
-	  success: function(json){
-              if(json.length>0){
-                  $("input[name=in_descr]").val(json[0].issueName);
-                  $("input[name=in_date]").val(json[0].endDevelopmentDt);
-                  $("input[name=in_developer]").val(json[0].login);
-                  $("input[name=in_comment]").select();
-                  $("#js-label-status").removeClass();
-                  var status = json[0].status;
-                  $("#js-label-status").addClass('label ' + getClassStatus(status));                  
-                  $("#js-label-status").html(status);
-              }else{
-                  $("input[name=in_descr]").val("");
-                  $("input[name=in_date]").val("");
-                  $("input[name=in_developer]").val("");
-                  $("#js-label-status").removeClass();
-                  $("#js-label-status").addClass('label label-default');
-                  $("#js-label-status").html("Статус");
-              }
-	  },
-          error: function(e){
-              console.log("Error");
-          }
+        url: '/api/issue',
+        type: "POST",
+        dataType: 'json',
+        data: 'in_issue=' + id,
+        success: function(json){
+	    console.log(json);
+            if(json.length>0){
+                $("input[name=in_descr]").val(json[0].issueName);
+                $("input[name=in_date]").val(json[0].endDevelopmentDt);
+                $("input[name=in_developer]").val(json[0].login);
+                $("input[name=in_comment]").select();
+                $("#js-label-status").removeClass();
+                var status = json[0].status;
+                $("#js-label-status").addClass('label ' + getClassStatus(status));
+                $("#js-label-status").html(status);
+            }else{
+                $("input[name=in_descr]").val("");
+                $("input[name=in_date]").val("");
+                $("input[name=in_developer]").val("");
+                $("#js-label-status").removeClass();
+                $("#js-label-status").addClass('label label-default');
+                $("#js-label-status").html("Статус");
+            }
+	},
+        error: function(e){
+            console.log("Error, getIssueInfo");
+        }
 	});
 }
 
