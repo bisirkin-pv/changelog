@@ -43,8 +43,8 @@ public class QuerysWorker {
     private String getQueryForLoad(){
         Properties properties = new Properties();
         try {
-            String file = System.getProperty("user.dir") + "/ChangeLog/config/settings.properties";
-            properties.load(new BufferedReader(new FileReader(file)));
+            //String file = System.getProperty("user.dir") + "/ChangeLog/config/settings.properties";
+            properties.load(new BufferedReader(new FileReader("config/settings.properties")));
             return properties.getProperty("change.log.querys");
         } catch (IOException ex) {
             Logger.getLogger(QuerysWorker.class.getName()).log(Level.SEVERE, null, ex);

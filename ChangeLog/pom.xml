@@ -77,7 +77,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>ru.bisirkin.Main</mainClass>
+                            <mainClass>Main</mainClass>
                         </manifest>
                     </archive>
                     <finalName>${artifactId}</finalName>

@@ -36,8 +36,8 @@ public class Config {
     public static void load(Type type, String path){
         try {
             Properties properties = new Properties();
-            String file = System.getProperty("user.dir") + "/ChangeLog/" + path;
-            properties.load(new BufferedReader(new FileReader(file)));
+            //String file = System.getProperty("user.dir") + "/ChangeLog/" + path;
+            properties.load(new BufferedReader(new FileReader(path)));
             Config.putConfig(type, properties);
             StringBuilder sb = new StringBuilder();
             sb.append("Add properties:");
