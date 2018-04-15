@@ -20,10 +20,10 @@
                     <#if current_page == "showlog">
                         <li class="active"><a href="/changelog/showlog">Просмотр</a></li>
                     <#else>
-                        <li><a href="/changelog/showlog">Просмотр</a></li>
+                        <li><a href="/changelog/show">Просмотр</a></li>
                     </#if>
 
-                    <#if current_page == "addlog">
+                    <#if current_page == "add">
                         <li class="active"><a href="/changelog/addlog">Добавление</a></li>
                     <#else>
                         <li><a href="/changelog/addlog">Добавление</a></li>
