@@ -144,7 +144,7 @@ public class ChangeLog {
         List<TableCurrentVersion> currentVersionList;
         try {
             currentVersionList = worker.getCurrentVersion();
-            if(currentVersionList !=null ){
+            if(currentVersionList.get(0).getVersion() != null ){
                 return currentVersionList.get(0).getVersion();
             }
         } catch (IOException ex) {
@@ -215,5 +215,20 @@ public class ChangeLog {
             LOG.log(Level.SEVERE, ex.getMessage());
         }
         return "-1";
+    }
+
+    /**
+     * Получает данные по задаче
+     * @param issue - номер задачи
+     * @return Список класса информации по задаче TableRedmainInfo
+     */
+    public List<TableRedmainInfo> getIssueInfo(int issue){
+        Worker worker = new Worker();
+        try {
+            return worker.getIssueInfo(issue);
+        } catch (IOException ex) {
+            LOG.log(Level.SEVERE, ex.getMessage());
+        }
+        return null;
     }
 }

@@ -25,10 +25,10 @@ public class QuerysLoader {
         try {
             querys = querysWorker.loadQuerys();
             if(querys==null){
-                LOG.log(Level.SEVERE, "Error load querysClass");
+                LOG.log(Level.SEVERE, "Error load class");
                 return 0;
             }
-            LOG.log(Level.INFO, "querysClass load success");
+            LOG.log(Level.INFO, "Class load success");
             return 1;
         } catch (IOException | ClassNotFoundException ex) {
             LOG.log(Level.SEVERE, ex.getMessage());

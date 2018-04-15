@@ -184,5 +184,14 @@ public class Worker {
         LOG.log(Level.INFO, "Delete detailed object");
     }
 
+    public List<TableRedmainInfo> getIssueInfo(int issue) throws IOException{
+        String sql = QuerysLoader.getQuery("getIssueInfo");
+        ConnectionProducer myDao = ConnectionProducerFactory.create(Config.Type.PROD);
+        try(Connection con = myDao.produceSql2o().open()) {
+            return con.createQuery(sql)
+                    .addParameter("issue", issue)
+                    .executeAndFetch(TableRedmainInfo.class);
+        }
+    }
 }
 
