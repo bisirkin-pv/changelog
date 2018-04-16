@@ -26,8 +26,8 @@ public class Main {
     public static void main(String[] args) {
         exception(Exception.class, (e, req, res) -> e.printStackTrace());
         //staticFiles.location("public");
-        //String workingDir = System.getProperty("user.dir") + "/ChangeLog/public";
-        externalStaticFileLocation("public");
+        String workingDir = System.getProperty("user.dir") + "/ChangeLog/public";
+        externalStaticFileLocation(workingDir);
 
         //4567
         port(8080);
@@ -53,10 +53,19 @@ public class Main {
             );
         });
 
+        get("/changelog/show", (req, res) -> {
+            Map<String, Object> model = templatePrepare(req);
+            model.put("current_page", "showlog");
+            return Template.getTemplate().render(
+                    new ModelAndView(model, "showlog.ftl")
+            );
+        });
+
         enableCORS("*", "GET,POST", "Access-Control-Allow-Origin");
 
         post("/api/login", (request, response) -> UserController.login(request));
 
+        /* add log page */
         post("/api/header", (request, response)->{
             ChangeLog changeLog = new ChangeLog();
             return changeLog.saveHeader(request);
@@ -85,6 +94,35 @@ public class Main {
                 return new Gson().toJson("");
             }
             return new Gson().toJson(changeLog.getIssueInfo(issue));
+        });
+        /* show log page */
+        get("/api/header","application/json", (request, response) -> {
+            ChangeLog cl = new ChangeLog();
+            return new Gson().toJson(cl.getAllHeader());
+        });
+        post("/api/header/upd","application/json",(req, res)->{
+            ChangeLog changeLog = new ChangeLog();
+            return new Gson().toJson(changeLog.updateHeader(req));
+        });
+        get("/api/header/:id","application/json", (request, response) -> {
+            ChangeLog cl = new ChangeLog();
+            return new Gson().toJson(cl.getHeader(Integer.parseInt(request.params("id"))));
+        });
+        get("/api/detail/:id","application/json", (request, response) -> {
+            ChangeLog cl = new ChangeLog();
+            return new Gson().toJson(cl.getDetail(Integer.parseInt(request.params("id"))));
+        });
+        post("/api/detail/upd","application/json", (req, res)->{
+            ChangeLog changeLog = new ChangeLog();
+            return new Gson().toJson(changeLog.updateDetail(req));
+        });
+        post("/api/changelog/del","application/json", (req, res)->{
+            ChangeLog changeLog = new ChangeLog();
+            return new Gson().toJson(changeLog.removeLog(req));
+        });
+        post("/api/filter","application/json", (request, response) -> {
+            ChangeLog cl = new ChangeLog();
+            return new Gson().toJson(cl.getFilteredHeader(request));
         });
     }
 

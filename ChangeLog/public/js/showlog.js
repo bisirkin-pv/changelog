@@ -129,7 +129,7 @@ $(document).ready(function(){
         var contents = $('.changeble').html();
         var id = $(tr).attr("data-index");
         $(clickElem).addClass("active");   
-        var url = "/updateobject";
+        var url = "/api/detail/upd";
         var typeUpd = "desc";
         $('.changeble').blur(function(){
                 if(contents!==$(this).html()){									
@@ -320,12 +320,6 @@ function createDetailTable(tableDetail,id){
  for(var i=0;i<tableDetail.length;i++){  
                 var successFilter = checkObjectInFilter(tableDetail[i].id);
                 html += createRowDetail(successFilter,tableDetail[i].id,tableDetail[i].objName,tableDetail[i].description);
-//                html += '<tr class="'+successFilter+'" data-index="'+tableDetail[i].id+'"><td>'+tableDetail[i].objName+'</td>'
-//                +'<td><span class="tbl-edit-icon-obj js-edit-detail-obj"><i class="fa fa-pencil" aria-hidden="true"></i></span></td>'
-//                + '<td>'+tableDetail[i].description+'</td>'
-//                +'<td><span class="tbl-edit-icon-obj js-edit-detail-desc"><i class="fa fa-pencil" aria-hidden="true"></i></span></td>'
-//                +'<td><span class="tbl-edit-icon-obj color-red js-edit-delete"><i class="fa fa-trash" aria-hidden="true"></i></span></td>'
-//                +'</tr>';
    }
    html += '</tbody></table>';
    return html;
@@ -379,8 +373,8 @@ function getFilteredObjectId(){
         type: "post",
         data: $('#js-form-filter').serialize(),
         success: function(json){
-            console.log(json[0]);
-            setFilter(json[0]);
+            console.log(json);
+            setFilter(json);
         },
         error: function(e){
             console.log("Error");
@@ -390,6 +384,7 @@ function getFilteredObjectId(){
 
 /* Отображаем только отфильтрованные объекты */
 /* принимает json того что оставить*/
+//TODO: Исправить работу фильтра
 function setFilter(filter){
     filterObj = JSON.parse(filter);
     if(filterObj.length===0){
@@ -437,10 +432,10 @@ function setFilter(filter){
     isClear = false;
 }
 
-/* проверка объекта на попадание в фильтр и возвращает CSS class*/
+/* проверка объекта на попадание в фильтр и возвращает CSS class */
 function checkObjectInFilter(objId){
     var isVisible = false;
-    if($('#js-form-filter input[name=in_find_object]').val()!==""){
+    if($('#js-form-filter input[name=in_find_object]').val() !== ""){
         for (var f=0; f<filterObj.length; f++){        
             if(objId == filterObj[f].objectId){
                 isVisible = true;
