@@ -39,29 +39,29 @@ function sendChangeLog(){
 		console.log(logid);
 		
 	  },
-          error: function(e){
+          error: function(){
               console.log("Error, sendChangeLog");
           }
 	});
-};
+}
 
  function sendDetailLog(){	
 	$.ajax({
 	  url: '/api/detail',
           type: "POST",
 	  data: $('#form_log_detail').serialize(),
-	  success: function(logid){
+	  success: function(){
                 var $desc = $('#form_log_detail').find("#in_obj_desc");  
                 var $name = $('#form_log_detail').find("#in_object");       
                 $('#tbl_detail > tbody').append('<tr><td>'+$name.val()+'</td><td>'+$desc.val()+'</td></tr>');	
                 $desc.val("");
                 $name.val("");
 	  },
-          error: function(e){
+          error: function(){
               console.log("Error, sendDetailLog");
           }
 	});
-};
+}
 
 function clearDetail(){
    console.log("clear");
@@ -97,7 +97,7 @@ function getCurrentVersion(){
                 var $version = $('input[name=in_version]');
                 $version.val(ver);
 	  },
-          error: function(e){
+          error: function(){
               console.log("Error, getCurrentVersion");
           }
 	});
@@ -129,7 +129,7 @@ function getIssueInfo(id){
                 $("#js-label-status").html("Статус");
             }
 	},
-        error: function(e){
+        error: function(){
             console.log("Error, getIssueInfo");
         }
 	});
