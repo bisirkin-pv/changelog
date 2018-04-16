@@ -116,8 +116,8 @@ CREATE TABLE dbo.tChangeLogObject
      id             INT IDENTITY(1,1) NOT NULL
     ,clId           INT               NOT NULL
     ,changeType     BIT DEFAULT 0     NOT NULL
-    ,objName        VARCHAR(1000)     NOT NULL
-    ,[description]  VARCHAR(2000)     NOT NULL
+    ,objName        VARCHAR(1000)         NULL
+    ,[description]  VARCHAR(2000)         NULL
     CONSTRAINT fkChangeLogObjectToChangeLog FOREIGN KEY(clId)
         REFERENCES dbo.tChangeLog (id)     
         ON DELETE CASCADE    
