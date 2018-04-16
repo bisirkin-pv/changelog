@@ -18,15 +18,15 @@
             </a>
                 <ul class="nav navbar-nav">
                     <#if current_page == "showlog">
-                        <li class="active"><a href="/changelog/showlog">Просмотр</a></li>
+                        <li class="active"><a href="/changelog/show">Просмотр</a></li>
                     <#else>
                         <li><a href="/changelog/show">Просмотр</a></li>
                     </#if>
 
-                    <#if current_page == "add">
-                        <li class="active"><a href="/changelog/addlog">Добавление</a></li>
+                    <#if current_page == "addlog">
+                        <li class="active"><a href="/changelog/add">Добавление</a></li>
                     <#else>
-                        <li><a href="/changelog/addlog">Добавление</a></li>
+                        <li><a href="/changelog/add">Добавление</a></li>
                     </#if>
                 </ul>
         </div>
