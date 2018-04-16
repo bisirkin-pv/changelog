@@ -30,7 +30,7 @@ $(document).ready(function(){
             url: '/api/header/upd',
             type: "POST",
             data: $('#form_log_header').serialize(),
-            success: function(answer){                
+            success: function(){
                 $('#change-result').html("Обновление произведено успешно.").removeClass("redText").addClass("greenText");                
                 $("#editModalHeader").modal('hide');
             },
@@ -176,7 +176,6 @@ $(document).ready(function(){
     /* Добавление деталей */
     $("body").on('click','.js-add-detail-obj',function(){
         var table = $(this).parent().parent().parent().parent();
-        var id = $(table).attr("data-header_id");
         $(table).find("tbody").append(createRowDetail("new",0,"",""));
     });
     //
@@ -199,7 +198,7 @@ function removeObj(id, type){
                 $(".removed").removeClass("removed");
             }
 	  },
-          error: function(e){
+          error: function(){
               $(".removed").removeClass("removed");
               console.log("Ошибка удаления");
           }
@@ -247,7 +246,7 @@ function clearResultUpdate(){
 }
 
 //Загружаем данные
-function loadAjax(url, collback){	
+function loadAjax(url, collback){
     $.ajax({
         url: url,
         dataType: 'json',
@@ -256,7 +255,7 @@ function loadAjax(url, collback){
             console.log("Error load");
         }
     });
-};
+}
 
 function showPanels(json){
     var $block = $("#log_block");
@@ -376,7 +375,7 @@ function getFilteredObjectId(){
             console.log(json);
             setFilter(json);
         },
-        error: function(e){
+        error: function(){
             console.log("Error");
         }
 	});
@@ -474,41 +473,4 @@ function createRowDetail(successFilter,id,objName,description){
                 +'<td><span class="tbl-edit-icon-obj js-edit-detail-desc"><i class="fa fa-pencil" aria-hidden="true"></i></span></td>'
                 +'<td><span class="tbl-edit-icon-obj color-red js-edit-delete"><i class="fa fa-trash" aria-hidden="true"></i></span></td>'
                 +'</tr>';    
-}
-
-/*
- *  Функция устанавливает класс для статуса
- *  in: Название статуса
- */
-function getClassStatus(status){
-    var styleClass = '';
-    switch(status){
-        case 'В ожидании внедрения':
-        case 'В процессе внедрения':
-        case 'Завершено внедрение':    
-        case 'Завершено тестирование':
-        case 'Завершена разработка':
-        case 'Завершена разработка':
-        case 'Выполнена':
-            styleClass = ' label-success ';
-            break;
-        case 'Аудит кода разработки':
-        case 'В ожидании тестирования':
-        case 'В процессе тестирования':
-            styleClass = ' label-info ';
-            break;
-        case 'В процессе разработки':
-            styleClass = ' label-primary ';
-            break;
-        case 'В ожидании разработки':
-            styleClass = ' label-warning ';
-            break;
-        case 'Отменена':
-            styleClass = ' label-danger ';
-            break;
-        default:
-            styleClass = ' label-default ';
-            break;
-    }
-    return styleClass;
 }

@@ -26,7 +26,8 @@ public class Main {
     public static void main(String[] args) {
         exception(Exception.class, (e, req, res) -> e.printStackTrace());
         //staticFiles.location("public");
-        String workingDir = System.getProperty("user.dir") + "/ChangeLog/public";
+        //String workingDir = System.getProperty("user.dir") + "/ChangeLog/public";
+        String workingDir = "public";
         externalStaticFileLocation(workingDir);
 
         //4567

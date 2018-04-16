@@ -148,7 +148,6 @@ function getClassStatus(status){
         case 'Завершено внедрение':    
         case 'Завершено тестирование':
         case 'Завершена разработка':
-        case 'Завершена разработка':
         case 'Выполнена':
             styleClass = ' label-success ';
             break;
